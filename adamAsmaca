@@ -1,0 +1,93 @@
+import java.util.*
+import kotlin.collections.ArrayList
+fun random(n: Int) = (Math.random() * n).toInt()
+
+
+fun main(args: Array<String>) {
+    val n = 2
+    var kelimeler = arrayOf("ali","gizem")
+    var kelimeSecim = kelimeler[random(n)]
+    //println(kelimeSecim)
+
+    var kaçHarf = kelimeSecim.length
+
+    var çizgi = "- "
+    repeat(kaçHarf) {
+        print(çizgi)
+    }
+    println("")
+
+    var hak = 3
+    var  girilenHarf = ArrayList<String>()
+    var  dogruHarf = ArrayList<String>()
+
+
+    while (hak>0){
+        println("Harf giriniz: ")
+        val stringInput = readLine()!!.toLowerCase()
+        val chars = kelimeSecim.toCharArray()
+        val a:String = Arrays.toString(chars)
+
+        if ( stringInput in dogruHarf || stringInput in girilenHarf) {
+            println("^^^^^^^^^^^^^^^^^^^^^^^^^^")
+            println("bu harfi daha önce kullandın ")
+            println("Kullanılan yanlış harfler "+ girilenHarf)
+            println("Kullanılan doğru harfler" + dogruHarf)
+            println("^^^^^^^^^^^^^^^^^^^^^^^^^^")
+        }
+
+
+        // eğer girilen harf  1 karakter ve 0 dan büyükse  kelimenin içinde varsa doğruharfler içinde yoksa
+        //doğru harflere ekle
+        if (stringInput.length==1&& stringInput in kelimeSecim && stringInput !in dogruHarf && stringInput.length+1 > 1 ){
+            dogruHarf.add(stringInput)
+            println("^^^^^^^^^^^^^^^^^^^^^^^^^^")
+            println("Kullanılan yanlış harfler "+ girilenHarf)
+            println("Kullanılan doğru harfler" + dogruHarf)
+            println("^^^^^^^^^^^^^^^^^^^^^^^^^^")
+        }
+        // eger kelimenin içinde yoksa ve uzunluk 2 den küçükse  kalan hak eksilt
+        if (stringInput !in kelimeSecim && stringInput.length < 2 && stringInput !in girilenHarf ) {
+            hak -= 1
+            girilenHarf.add(stringInput)
+            println("^^^^^^^^^^^^^^^^^^^^^^^^^^")
+            println("Kullanılan yanlış harfler "+ girilenHarf)
+            println("Kullanılan doğru harfler" + dogruHarf)
+            println("^^^^^^^^^^^^^^^^^^^^^^^^^^")
+        }
+        // girilen harf içinde yoksa gerilen harfe ekle
+        //girilenharf içinde varsa ve uzunlugu 0 dan büyükse bu harfi girdiniz yaz
+        if (stringInput !in girilenHarf && stringInput !in kelimeSecim &&stringInput.length+1 == 1) {
+            println("^^^^^^^^^^^^^^^^^^^^^^^^^^")
+            girilenHarf.add(stringInput)
+            println("Kullanılan yanlış harfler "+ girilenHarf)
+            println("Kullanılan doğru harfler" + dogruHarf)
+            println("^^^^^^^^^^^^^^^^^^^^^^^^^^")
+        }
+        // kelime içinde varsa doğru harfte yoksa uzunlugu 0 dan büyükse dogru harfe ekle
+       // if (stringInput in kelimeSecim && stringInput !in dogruHarf && stringInput.length+1 > 1 )
+           // dogruHarf.add(kelimeSecim)
+
+
+
+        if (stringInput.length>1 || stringInput.length+1 == 1  ){
+            println("^^^^^^^^^^^^^^^^^^^^^^^^^^")
+            println("Harf girişi yaparken tek harf girmeye özen gösteriniz.")
+            println("^^^^^^^^^^^^^^^^^^^^^^^^^^")
+        }
+
+
+        if (dogruHarf.size == kelimeSecim.length){
+            println("Tebrikler doğru cevap "+ kelimeSecim)
+            break
+        }
+
+        var icindeVarmı = stringInput in kelimeSecim && stringInput.length+1 > 1
+
+        println("Kalan hak =" + hak )
+        if (hak == 0 ){
+            println("Cevap  "+kelimeSecim+ "  olmalıydı")
+        }
+    }
+    println("^^^^^^^^^^^^^^^^^^^^^^^^^^")
+}
